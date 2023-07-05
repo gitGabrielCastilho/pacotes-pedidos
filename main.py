@@ -16,7 +16,6 @@ cur.execute(SELECT1)
 table_rows1 = cur.fetchall()
 ########################################################################
 df1 = pd.DataFrame(table_rows1)
-#df1 = df1[df1[2] == "B"]
 ########################################################################
 print("Digite o cód do cliente: ")
 cod_cli = int(input())
@@ -28,9 +27,17 @@ df2 = df1.loc[df1[1] == num_pedido]
 df2 = df2.reset_index(drop=True)
 valor_pedido = df2.iloc[0,3]
 ########################################################################
+df1 = df1[df1[2] == 3]
 df1 = df1.reset_index(drop=True)
 total = df1[3].sum()
 ########################################################################
+valor_restante = valor_pedido - total
 
-#print(total_atual)
-#print(df1)
+if valor_restante > 0:
+    print(f"O cliente tem o valor de R${valor_restante:,.2f} para retirar do pacote {num_pedido}")
+
+elif valor_restante < 0:
+    print(f"O pacote {num_pedido} do cliente acabou, ele retirou R${valor_restante:,.2f} a mais do pacote")
+
+elif valor_restante == 0:
+    print(f"O cliente completou a retirada do pacote {num_pedido}")
