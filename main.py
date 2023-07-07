@@ -5,11 +5,10 @@ from tkinter import *
 
 def enter_data():
     dst_path = r'MTK:C:/Microsys/MsysIndustrial/Dados/MSYSDADOS.FDB'
-
     TABLE_NAME1 = 'PEDIDOS_VENDAS'
 
 ########################################################################
-    SELECT1 = 'select PDV_CLI_CODIGO, PDV_NUMERO, PDV_CON_CODIGO, PDV_VALORPRODUTOS from %s ' \
+    SELECT1 = 'select PDV_CLI_CODIGO, PDV_NUMERO, PDV_CON_CODIGO, PDV_VALORPRODUTOS, PDV_PSI_CODIGO from %s ' \
             % (TABLE_NAME1)
 ########################################################################
     con = fdb.connect(dsn=dst_path, user='SYSDBA', password='masterkey', charset='UTF8')
@@ -24,6 +23,7 @@ def enter_data():
     cod_cli = cod_cli_entry.get()
     cod_cli = int(cod_cli)
     df1 = df1[df1[0] == cod_cli]
+    df1 = df1[df1[4] != "CC"]
 
 # ########################################################################
     num_pedido_yale = yale_entry.get()
@@ -32,18 +32,18 @@ def enter_data():
     df2 = df2.reset_index(drop=True)
     valor_pedido_yale = df2.iloc[0,3]
 # ########################################################################
-    dfx = df1[df1[2] == 3]
+    dfx = df1[df1[2] == 42]
     dfx = dfx.reset_index(drop=True)
     total = dfx[3].sum()
 # ########################################################################
 
-    valor_restante_yale = (valor_pedido_yale - total)
+    valor_restante_yale = valor_pedido_yale - total
 
     if valor_restante_yale > 0:
-        var_yale.set(f"O cliente tem o valor de {valor_restante_yale:,.2f} para retirar do pacote {num_pedido_yale}")
+        var_yale.set(f"O cliente tem o valor de R${valor_restante_yale:,.2f} para retirar do pacote {num_pedido_yale}")
 
     elif valor_restante_yale < 0:
-        var_yale.set(f"O pacote {num_pedido_yale} do cliente acabou, retirou R${valor_restante_yale:,.2f} a mais do pacote")
+        var_yale.set(f"O pacote {num_pedido_yale} acabou, foi retirado R${valor_restante_yale:,.2f} a mais do pacote")
 
     elif valor_restante_yale == 0:
         var_yale.set(f"O cliente completou a retirada do pacote {num_pedido_yale}")
@@ -53,10 +53,10 @@ def enter_data():
     num_pedido_tetra = tetra_entry.get()
     num_pedido_tetra= int(num_pedido_tetra)
 
-    if num_pedido_tetra == 0:
+    if num_pedido_tetra == 0 or None:
         pass
     elif num_pedido_tetra != 0:
-        dfy = df1[df1[2] == 3]
+        dfy = df1[df1[2] == 43]
         dfy = dfy.reset_index(drop=True)
         total_tetra = dfy[3].sum()
 
@@ -72,7 +72,7 @@ def enter_data():
             var_tetra.set(f"O cliente tem o valor de R${valor_restante_tetra:,.2f} para retirar do pacote {num_pedido_tetra}")
 
         elif valor_restante_tetra < 0:
-            var_tetra.set(f"O pacote {num_pedido_tetra} do cliente acabou, ele retirou R${valor_restante_tetra:,.2f} a mais do pacote")
+            var_tetra.set(f"O pacote {num_pedido_tetra} acabou, foi retirado R${valor_restante_tetra:,.2f} a mais do pacote")
 
 
 
