@@ -81,49 +81,43 @@ window.title('Calculadora de Pacotes')
 
 frame = tkinter.Frame(window)
 frame.pack()
+window.geometry("400x300")
 
-user_info_frame = tkinter.LabelFrame(frame, text='Cliente')
-user_info_frame.grid(row=0 , column = 0, padx=10, pady=10, sticky="news")
+################################################################################
+user_info_frame = tkinter.LabelFrame(frame, text='Informações do Pedido')
+user_info_frame.grid(padx=10, pady=10)
 
 cod_cli_label = tkinter.Label(user_info_frame, text ='Código cliente: ')
 cod_cli_label.grid(row=0, column=0, pady=5)
 cod_cli_entry = tkinter.Entry(user_info_frame)
-cod_cli_entry.grid(row=1, column=0, padx=5, pady=5)
+cod_cli_entry.grid(row=0, column=1, padx=5, pady=5)
 ##################################################################################
-yales_frame = tkinter.LabelFrame(frame, text="Pedido Yale")
-yales_frame.grid(row=1, column=0, padx=10, pady=10, sticky="news")
-
-yale_label = tkinter.Label(yales_frame, text="Pedido Yale:")
-yale_label.grid(row=0, column=0, pady = 5)
-yale_entry = tkinter.Entry(yales_frame)
-yale_entry.grid(row=1, column=0, padx=5, pady=5)
+yale_label = tkinter.Label(user_info_frame, text="Pedido Yale:")
+yale_label.grid(row=1, column=0, pady = 5)
+yale_entry = tkinter.Entry(user_info_frame)
+yale_entry.grid(row=1, column=1, padx=5, pady=5)
 ##################################################################################
-tetra_frame = tkinter.LabelFrame(frame, text="Pedido Outras Chaves")
-tetra_frame.grid(row=2, column = 0, padx=10, pady=10, sticky="news")
-tetra_label = tkinter.Label(tetra_frame, text="Pedido outras chaves:")
-tetra_label_info = tkinter.Label(tetra_frame, text="Digite 0 caso não houver ")
-tetra_label.grid(row=0, column=0, pady=5)
-tetra_label_info.grid(row=1, column=0)
-tetra_entry = tkinter.Entry(tetra_frame)
-tetra_entry.grid(row=2, column=0, pady=5)
+tetra_label = tkinter.Label(user_info_frame, text="Pedido Outras chaves:")
+tetra_label_info = tkinter.Label(user_info_frame, text="Digite 0 caso não houver ")
+tetra_label.grid(row=3, column=0, pady=5)
+tetra_label_info.grid(row=4, column=0)
+tetra_entry = tkinter.Entry(user_info_frame)
+tetra_entry.grid(row=3, column=1, pady=5)
 
 
 ##################################################################################
 button = tkinter.Button(frame, text="Confirmar", command=enter_data)
-button.grid(row=3, column=0, sticky="news", pady=5, padx=10)
+button.grid(row=2, column=0, sticky="news", pady=5, padx=10)
 
 ##################################################################################
-resultado_frame = tkinter.LabelFrame(frame, text="Resultado")
-resultado_frame.grid(row=4, column=0, padx=10, pady=10, sticky="news")
-
 var_yale = StringVar()
-var_yale.set("a")
+var_yale.set("")
 
-resultado_yale = tkinter.Label(resultado_frame, textvariable = var_yale)
-resultado_yale.grid(row=0, column=0, padx=10, pady=10)
+resultado_yale = tkinter.Label(frame, textvariable = var_yale)
+resultado_yale.grid(row=3, column=0, padx=10, pady=10)
 
 var_tetra = StringVar()
 var_tetra.set("")
-resultado_tetra = tkinter.Label(resultado_frame, textvariable = var_tetra)
-resultado_tetra.grid(row=0, column=0, padx=10, pady=10)
+resultado_tetra = tkinter.Label(frame, textvariable = var_tetra)
+resultado_tetra.grid(row=4, column=0, padx=10, pady=10)
 window.mainloop()
